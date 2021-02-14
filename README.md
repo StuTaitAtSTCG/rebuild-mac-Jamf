@@ -26,7 +26,26 @@ echo "Creating BackupHD volume"
 
 # Sync the User accounts to the BackupHD volume
 echo "Syncing the User accounts to BackupHD volume"
-/usr/bin/rsync -au --exclude 'Library' --exclude '.*' /Users/ /Volumes/BackupHD/Users
+rsync -au \
+  --exclude '*/.Trash' \
+  --exclude '*/Library/Application Support/CallHistoryTransactions' \
+  --exclude '*/Library/Application Support/com.apple.sharedfilelist' \
+  --exclude '*/Library/Application Support/com.apple.TCC' \
+  --exclude '*/Library/Application Support/FileProvider' \
+  --exclude '*/Library/Application Support/CallHistoryDB' \
+  --exclude '*/Library/Autosave Information' \
+  --exclude '*/Library/IdentityServices' \
+  --exclude '*/Library/Messages' \
+  --exclude '*/Library/Sharing' \
+  --exclude '*/Library/Mail' \
+  --exclude '*/Library/Safari' \
+  --exclude '*/Library/Suggestions' \
+  --exclude '*/Library/Containers/com.apple.Safari' \
+  --exclude '*/Library/PersonalizationPortrait' \
+  --exclude '*/Library/Metadata/CoreSpotlight' \
+  --exclude '*/Library/Cookies' \
+  --exclude '*/Library/Caches/CloudKit' \
+  /Users/ /Volumes/BackupHD/Users
 
 # Reset ignore settings in softwareupdate
 echo "Reset ingored updates"
