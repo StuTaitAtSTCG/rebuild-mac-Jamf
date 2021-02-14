@@ -18,11 +18,14 @@ Provide a simple means to allow technicians to move user data, erase the Mac, re
 ```
 #!/bin/bash
 
+# Find out where the which disk the System volume is located, the BackupHD volume will be created on the same disk
+sysVol=$(diskutil ap listvolumegroups | grep -i -e '(Role)' | awk '/Role/ && /System/' | awk '{print $5}'  | awk -F"s[0-9]" '{print $1}')
+
 # Create a BackupHD volume
 # ! Check to make sure disk1 is where it should be created, manual check atm
 if [ ! -d "/Volumes/BackupHD" ]; then
   echo "Creating BackupHD volume"
-  /usr/sbin/diskutil ap addVolume disk1 APFS BackupHD
+  /usr/sbin/diskutil ap addVolume "$sysVol" APFS BackupHD
 else
   echo "BackupHD already exists"
 fi
