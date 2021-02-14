@@ -19,10 +19,13 @@ Provide a simple means to allow technicians to move user data, erase the Mac, re
 #!/bin/bash
 
 # Create a BackupHD volume
-# ! Check to make sure there is not a BackupHD already
 # ! Check to make sure disk1 is where it should be created, manual check atm
-echo "Creating BackupHD volume"
-/usr/sbin/diskutil ap addVolume disk1 APFS BackupHD
+if [ ! -d "/Volumes/BackupHD" ]; then
+  echo "Creating BackupHD volume"
+  /usr/sbin/diskutil ap addVolume disk1 APFS BackupHD
+else
+  echo "BackupHD already exists"
+fi
 
 # Sync the User accounts to the BackupHD volume
 echo "Syncing the User accounts to BackupHD volume"
@@ -66,8 +69,12 @@ echo "Begin installation"
 #!/bin/bash
 
 # Sync the files from the backup drive to the user accounts.
-# ! Check if there is BackupHD volume
-/usr/bin/rsync -au --exclude 'Library' --exclude '.*' /Volumes/BackupHD/Users/ /Users
+if [ -d "/Volumes/BackupHD" ]; then
+  echo "Syncing BackupHD accounts to Macintosh HD - Data"
+  /usr/bin/rsync -au /Volumes/BackupHD/Users/ /Users
+else
+  echo "BackupHD does not exist"
+fi
 ```
 
 ## Script - Delete BackupHD
@@ -76,8 +83,13 @@ echo "Begin installation"
 #!/bin/bash
 
 # Delete the BackupHD volume
-# ! Check if there is BackupHD volume
-/usr/sbin/diskutil ap deleteVolume 'BackupHD'
+if [ -d "/Volumes/BackupHD" ]; then
+  echo "Deleting BackupHD volume"  
+  /usr/sbin/diskutil ap deleteVolume 'BackupHD'
+else
+  echo "BackupHD does not exist"
+fi
+
 ```
 
 ## Jamf Policies
