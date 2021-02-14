@@ -1,6 +1,6 @@
 # Easy Backup and Install macOS with Jamf
 
-Provide a simple means to allow technicians to backup user data, erase the Mac, reinstall the macOS and then restore the user data.
+Provide a simple means to allow technicians to move user data, erase the Mac, reinstall the macOS and then restore the user data.
 
 ## Steps
 
@@ -65,11 +65,18 @@ echo "Begin installation"
 
 ### Backup and Rebuild macOS
 
+- Self Service
 - Ongoing
-- Script
+- Script - Main
 
 ### Restore User accounts
 
-- Custom
 - Enrolment
-- Script
+- Script - Restore User Accounts
+
+### Delete BackupHD
+
+- Scope: Smart Group that shows enrolled Macs x many days old
+- Recurring Check-in
+- Once per computer
+- Script - Delete BackupHD
