@@ -8,7 +8,7 @@ Provide a simple means to allow technicians to move user data, erase the Mac, re
 - Transfer copy of accounts to new volume
 - Disable ignore macOS major update
 - Download major macOS version via softwareupdate
-- Begin installation of macOS with startosinstall and --eraseinstall + --preservecontainer
+- Begin installation of macOS with startosinstall and --eraseinstall --preservecontainer
 - Once the Macs has installed the OS and enrolled into MDM, run command to restore accounts
 - After time delay delete volume used to backup accounts to
 
